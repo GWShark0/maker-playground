@@ -1,8 +1,9 @@
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles((theme) => ({
-  container: {
+  placeholder: {
     flex: 1,
+    width: '100%',
     maxWidth: 900,
     aspectRatio: '16 / 9',
     backgroundColor: theme.palette.grey[400],
@@ -12,5 +13,5 @@ const useStyles = makeStyles((theme) => ({
 
 export default function VideoPlaceholder() {
   const classes = useStyles();
-  return <div className={classes.container}></div>;
+  return <div className={classes.placeholder} />;
 }

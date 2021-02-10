@@ -1,5 +1,5 @@
 import { withStyles } from '@material-ui/core/styles';
-import { LinearProgress } from '@material-ui/core';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 const BorderLinearProgress = withStyles((theme) => ({
   root: {
