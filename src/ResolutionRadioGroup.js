@@ -1,10 +1,18 @@
+import { makeStyles } from '@material-ui/core/styles';
+import FormControl from '@material-ui/core/FormControl';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import FormLabel from '@material-ui/core/FormLabel';
 import Radio from '@material-ui/core/Radio';
 import RadioGroup from '@material-ui/core/RadioGroup';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-import FormControl from '@material-ui/core/FormControl';
-import FormLabel from '@material-ui/core/FormLabel';
+
+const useStyles = makeStyles({
+  formControl: {
+    display: 'block',
+  },
+});
 
 export default function ResolutionRadioGroup(props) {
+  const classes = useStyles();
   const { value = '1080p', onChange } = props;
 
   const handleChange = (event) => {
@@ -12,7 +20,7 @@ export default function ResolutionRadioGroup(props) {
   };
 
   return (
-    <FormControl component="fieldset">
+    <FormControl className={classes.formControl} component="fieldset">
       <FormLabel component="legend">Resolution</FormLabel>
       <RadioGroup
         aria-label="resolution"
