@@ -1,11 +1,13 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import queryString from 'query-string';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Drawer from '@material-ui/core/Drawer';
 import Typography from '@material-ui/core/Typography';
 
-import ResolutionRadioGroup from './ResolutionRadioGroup';
+import ResolutionToggle from './ResolutionToggle';
 import { renameProject, selectProjectName } from './app/projectSlice';
 import { closeExportDrawer } from './app/uiSlice';
 import ProjectNameInput from './ProjectNameInput';
@@ -30,11 +32,12 @@ const useStyles = makeStyles((theme) => ({
 
 export default function ExportDrawer() {
   const classes = useStyles();
+  const history = useHistory();
   const dispatch = useDispatch();
   const open = useSelector((state) => state.ui.isExportDrawerOpen);
   const projectName = useSelector(selectProjectName);
 
-  const [resolution, setResolution] = useState('1080p');
+  const [resolution, setResolution] = useState('480p');
 
   const handleClose = () => {
     dispatch(closeExportDrawer());
@@ -44,9 +47,16 @@ export default function ExportDrawer() {
     dispatch(renameProject(value));
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const query = queryString.stringify({ resolution });
+    history.push(`/export?${query}`);
+    handleClose();
+  };
+
   return (
     <Drawer anchor="right" open={open} onClose={handleClose}>
-      <form className={classes.drawer} action="/export">
+      <form className={classes.drawer} onSubmit={handleSubmit}>
         <div>
           <Typography className={classes.title} variant="h5" gutterBottom>
             Export Preferences
@@ -55,7 +65,7 @@ export default function ExportDrawer() {
             value={projectName}
             onChange={handleProjectNameChange}
           />
-          <ResolutionRadioGroup value={resolution} onChange={setResolution} />
+          <ResolutionToggle value={resolution} onChange={setResolution} />
         </div>
         <Button type="submit" variant="contained" color="primary">
           Export
