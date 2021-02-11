@@ -16,6 +16,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Typography from '@material-ui/core/Typography';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 import BorderLinearProgress from './BorderLinearProgress';
 import VideoLoader from './VideoLoader';
@@ -128,6 +129,7 @@ export default function ExportPage() {
                 href={roll}
                 download="roll.mp4"
                 ref={downloadButtonRef}
+                endIcon={<GetAppIcon />}
               >
                 Download Video
               </Button>
