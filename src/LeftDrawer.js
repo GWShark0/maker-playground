@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,6 +9,7 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import SearchIcon from '@material-ui/icons/Search';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
+import { openMediaDialog } from './app/uiSlice';
 
 const drawerWidth = 240;
 
@@ -26,6 +28,15 @@ const useStyles = makeStyles({
 
 export default function LeftDrawer() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
+  const handleSearchButtonClick = () => {
+    dispatch(openMediaDialog());
+  };
+
+  const handleUploadButtonClick = () => {
+    dispatch(openMediaDialog({ tab: 1 }));
+  };
 
   return (
     <Drawer
@@ -36,13 +47,13 @@ export default function LeftDrawer() {
       <Toolbar />
       <div className={classes.drawerContainer}>
         <List>
-          <ListItem button>
+          <ListItem button onClick={handleSearchButtonClick}>
             <ListItemIcon>
               <SearchIcon />
             </ListItemIcon>
             <ListItemText primary="Search Stock" />
           </ListItem>
-          <ListItem button>
+          <ListItem button onClick={handleUploadButtonClick}>
             <ListItemIcon>
               <CloudUploadIcon />
             </ListItemIcon>

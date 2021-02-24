@@ -1,3 +1,4 @@
+import { useDispatch } from 'react-redux';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
@@ -10,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import FastForwardRoundedIcon from '@material-ui/icons/FastForwardRounded';
 import FastRewindRoundedIcon from '@material-ui/icons/FastRewindRounded';
 import PlayArrowRoundedIcon from '@material-ui/icons/PlayArrowRounded';
+import { closeAll } from './app/uiSlice';
 
 const styles = (theme) => ({
   root: {
@@ -81,12 +83,21 @@ const useStyles = makeStyles((theme) => ({
 export default function TrimDialog(props) {
   const { item, onClose, open } = props;
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   const { name, src } = item;
 
+  const handleCancel = () => {
+    dispatch(closeAll());
+  };
+
+  const handleConfirm = () => {
+    dispatch(closeAll());
+  };
+
   return (
     <Dialog fullWidth open={open} onClose={onClose}>
-      <DialogTitle onClose={onClose}>Trim</DialogTitle>
+      <DialogTitle onClose={handleCancel}>Trim</DialogTitle>
       <DialogContent className={classes.dialogContent} dividers>
         <div className={classes.preview}>
           {src && <img src={src} alt={name} />}
@@ -99,8 +110,10 @@ export default function TrimDialog(props) {
         </div>
       </DialogContent>
       <DialogActions className={classes.dialogActions}>
-        <Button color="default">Back</Button>
-        <Button onClick={onClose} color="primary">
+        <Button color="default" onClick={onClose}>
+          Back
+        </Button>
+        <Button onClick={handleConfirm} color="primary">
           Save changes
         </Button>
       </DialogActions>

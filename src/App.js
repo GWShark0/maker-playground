@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -11,12 +10,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 
 import AppBar from './AppBar';
 import EditorPage from './EditorPage';
-import ExportDrawer from './ExportDrawer';
 import ExportPage from './ExportPage';
 import LeftDrawer from './LeftDrawer';
-import MediaManagerDialog from './MediaManagerDialog';
-import TrimDialog from './TrimDialog';
-import UploadDialog from './UploadDialog';
+import UIContainer from './UIContainer';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,22 +27,10 @@ const useStyles = makeStyles((theme) => ({
 
 export default function App() {
   const classes = useStyles();
-  const [open, setOpen] = useState(true);
-
-  const handleOpen = () => {
-    setOpen(true);
-  };
-
-  const handleClose = () => {
-    setOpen(false);
-  };
 
   return (
     <div className={classes.root}>
       <CssBaseline />
-      <MediaManagerDialog onClose={handleClose} />
-      <TrimDialog onClose={handleClose} />
-      <UploadDialog onClose={handleClose} />
       <Router>
         <AppBar />
         <Switch>
@@ -67,7 +51,7 @@ export default function App() {
             <Redirect to="/editor" />
           </Route>
         </Switch>
-        <ExportDrawer />
+        <UIContainer />
       </Router>
     </div>
   );

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Box from '@material-ui/core/Box';
@@ -17,6 +18,7 @@ import LibraryMusicIcon from '@material-ui/icons/LibraryMusic';
 import PhotoLibraryIcon from '@material-ui/icons/PhotoLibrary';
 import VideoLibraryIcon from '@material-ui/icons/VideoLibrary';
 
+import { openTrimDialog, openUploadDialog } from './app/uiSlice';
 import stockItems from './stockItems';
 import Search from './Search';
 
@@ -45,9 +47,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MediaManagerDialog(props) {
+export default function MediaDialog(props) {
   const { open, onClose } = props;
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [mediaType, setMediaType] = useState(props.mediaType);
   const [searchQuery, setSearchQuery] = useState(props.searchQuery);
   const [tab, setTab] = useState(props.tab);
@@ -74,6 +77,14 @@ export default function MediaManagerDialog(props) {
     setSearchQuery(value);
   };
 
+  const handleMediaItemClick = (item) => {
+    dispatch(openTrimDialog({ item }));
+  };
+
+  const handleUploadClick = () => {
+    dispatch(openUploadDialog());
+  };
+
   return (
     <Dialog
       className={classes.root}
@@ -83,7 +94,7 @@ export default function MediaManagerDialog(props) {
     >
       <AppBar position="relative" color="default">
         <Toolbar className={classes.toolbar}>
-          <Typography variant="h6">Media Manager</Typography>
+          <Typography variant="h6">Media</Typography>
           <IconButton color="inherit" onClick={() => onClose()}>
             <CloseIcon />
           </IconButton>
@@ -127,9 +138,7 @@ export default function MediaManagerDialog(props) {
               className={classes.mediaItem}
               src={item.src}
               key={item.name}
-              onClick={() => {
-                console.log('clicked:', item.name);
-              }}
+              onClick={() => handleMediaItemClick(item)}
               alt={item.name}
             />
           ))}
@@ -160,6 +169,7 @@ export default function MediaManagerDialog(props) {
             variant="contained"
             color="secondary"
             endIcon={<CloudUploadIcon />}
+            onClick={handleUploadClick}
           >
             Upload
           </Button>
@@ -169,7 +179,7 @@ export default function MediaManagerDialog(props) {
   );
 }
 
-MediaManagerDialog.defaultProps = {
+MediaDialog.defaultProps = {
   open: false,
   mediaType: 'video',
   searchQuery: '',

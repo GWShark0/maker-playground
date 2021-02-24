@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import queryString from 'query-string';
@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 
 import ResolutionToggle from './ResolutionToggle';
 import { renameProject, selectProjectName } from './app/projectSlice';
-import { closeExportDrawer } from './app/uiSlice';
 import ProjectNameInput from './ProjectNameInput';
 
 const useStyles = makeStyles((theme) => ({
@@ -30,18 +29,18 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function ExportDrawer() {
+export default function ExportDrawer(props) {
+  const { open, onClose } = props;
   const classes = useStyles();
   const history = useHistory();
   const dispatch = useDispatch();
-  const open = useSelector((state) => state.ui.isExportDrawerOpen);
   const projectName = useSelector(selectProjectName);
 
-  const [resolution, setResolution] = useState('480p');
+  const [resolution, setResolution] = useState(props.resolution);
 
-  const handleClose = () => {
-    dispatch(closeExportDrawer());
-  };
+  useEffect(() => {
+    setResolution(props.resolution);
+  }, [props.resolution]);
 
   const handleProjectNameChange = (value) => {
     dispatch(renameProject(value));
@@ -51,11 +50,11 @@ export default function ExportDrawer() {
     event.preventDefault();
     const query = queryString.stringify({ resolution });
     history.push(`/export?${query}`);
-    handleClose();
+    onClose();
   };
 
   return (
-    <Drawer anchor="right" open={open} onClose={handleClose}>
+    <Drawer anchor="right" open={open} onClose={onClose}>
       <form className={classes.drawer} onSubmit={handleSubmit}>
         <div>
           <Typography className={classes.title} variant="h5" gutterBottom>
