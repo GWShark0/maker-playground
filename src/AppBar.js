@@ -11,6 +11,9 @@ import { openExportDrawer } from './app/uiSlice';
 import { ReactComponent as MakerLogo } from './assets/maker-logo.svg';
 
 const useStyles = makeStyles((theme) => ({
+  appBar: {
+    zIndex: theme.zIndex.drawer + 1,
+  },
   exportButton: {
     marginLeft: 'auto',
   },
@@ -33,7 +36,7 @@ export default function AppBar() {
 
   return (
     <div className={classes.root}>
-      <MuiAppBar position="relative">
+      <MuiAppBar position="fixed" className={classes.appBar}>
         <Toolbar>
           <Link to="/editor">
             <MakerLogo width="32px" height="32px" />
