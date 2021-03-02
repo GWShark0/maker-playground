@@ -73,3 +73,7 @@ export default function ExportDrawer(props) {
     </Drawer>
   );
 }
+
+ExportDrawer.defaultProps = {
+  resolution: '480p',
+};
