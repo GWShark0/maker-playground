@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 import { DRAWER_WIDTH } from './MainDrawer';
+import { Toolbar } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -31,6 +32,7 @@ export default function MainContent(props) {
 
   return (
     <main className={clsx(classes.content, { [classes.contentShift]: open })}>
+      <Toolbar />
       <Typography paragraph>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Rhoncus dolor purus
