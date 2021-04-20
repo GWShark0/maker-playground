@@ -1,10 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
+import Toolbar from '@material-ui/core/Toolbar';
 
 import DrawerCloseBump from './DrawerCloseBump';
-import { SIDEBAR_WIDTH } from './MainSidebar';
-import { Toolbar } from '@material-ui/core';
 
+import { SIDEBAR_WIDTH } from './MainSidebar';
 export const DRAWER_WIDTH = 320;
 
 const useStyles = makeStyles((theme) => ({
