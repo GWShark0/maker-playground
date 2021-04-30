@@ -1,37 +1,48 @@
 import { makeStyles } from '@material-ui/core/styles';
-import PaddedAspectBox from './PaddedAspectBox';
+
+import useResizeObserver from 'use-resize-observer';
 
 import birb from '../assets/birb.jpg';
 
+const TOOLBAR_HEIGHT = 40;
+const CONTROLS_HEIGHT = 40;
+
 const useStyles = makeStyles((theme) => ({
   root: {
-    // display: 'flex',
-    // flexDirection: 'column',
-    // alignItems: 'center',
-    // flex: 1,
-    backgroundColor: theme.palette.grey[800],
     gridArea: 'stage',
-    // height: 300,
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: '100%',
+    backgroundColor: theme.palette.grey[800],
   },
-  // video: {
-  //   aspectRatio: '16/9',
-  //   height: '100%',
-  //   backgroundColor: 'red',
-  // },
-  // controls: {
-  //   flexShrink: 0,
-  //   height: 60,
-  //   width: '100%',
-  //   backgroundColor: 'blue',
-  // },
+  toolbar: {
+    height: TOOLBAR_HEIGHT,
+  },
+  preview: {
+    margin: 'auto',
+    objectFit: 'cover',
+  },
+  controls: {
+    height: CONTROLS_HEIGHT,
+  },
 }));
 
 export default function Stage() {
   const classes = useStyles();
+  const { ref, height = 1 } = useResizeObserver();
+
+  const previewHeight = height - TOOLBAR_HEIGHT - CONTROLS_HEIGHT;
+
+  const style = {
+    height: previewHeight,
+    width: previewHeight * (16 / 9),
+  };
+
   return (
-    <div className={classes.root}>
-      {/* <img className={classes.video} src={birb} alt="" />
-      <div className={classes.controls}></div> */}
+    <div className={classes.root} ref={ref}>
+      <div className={classes.toolbar} />
+      <img className={classes.preview} style={style} src={birb} alt="" />
+      <div className={classes.controls} />
     </div>
   );
 }

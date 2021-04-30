@@ -9,14 +9,9 @@ import { DRAWER_WIDTH } from './MainDrawer';
 
 const useStyles = makeStyles((theme) => ({
   content: {
-    display: 'grid',
-    gridTemplateColumns: '1fr',
-    gridTemplateRows: '64px 1fr 300px',
-    gap: '0px 0px',
-    gridTemplateAreas: '"toolbar" "stage" "timeline"',
     flexGrow: 1,
-    backgroundColor: theme.palette.grey[800],
-    color: theme.palette.common.white,
+    display: 'flex',
+    flexDirection: 'column',
     transition: theme.transitions.create('margin', {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
@@ -30,8 +25,13 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  toolbar: {
-    gridArea: 'toolbar',
+  editor: {
+    flexGrow: 1,
+    display: 'grid',
+    gridTemplateColumns: '1fr',
+    gridTemplateRows: '1fr 300px',
+    gap: '0px 0px',
+    gridTemplateAreas: '"stage" "timeline"',
   },
 }));
 
@@ -42,9 +42,10 @@ export default function MainContent(props) {
   return (
     <main className={clsx(classes.content, { [classes.contentShift]: open })}>
       <Toolbar />
-
-      <Stage />
-      <Timeline />
+      <div className={classes.editor}>
+        <Stage />
+        <Timeline />
+      </div>
     </main>
   );
 }
